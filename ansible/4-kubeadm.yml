@@ -1,0 +1,31 @@
+---
+  - name: KubeAdm on Master
+    hosts: master
+    remote_user: root
+    tasks:
+    - name: Reset Master Node
+      shell: 
+        cmd: |
+          rm -rf /etc/kubernetes/manifests/
+          mkdir ~/.kube
+          cp /etc/kubernetes/admin.conf ~/.kube/
+          cd ~/.kube
+          mv admin.conf config
+          service kubelet stop
+          rm -rf /var/lib/etcd
+    
+    - name: Get Internal IP
+      set_fact:
+        internal_ip: "{{ ansible_all_ipv4_addresses[0] }}"
+
+    - debug: msg="{{ internal_ip }}"  
+
+    - name: Regex internal to network address
+      set_fact:
+        network_ip: "{{  internal_ip | regex_replace('\\.\\d+$', '.0')  }}"
+ 
+    - debug: msg="{{ network_ip }}"  
+
+    - name: Initialize the Kubernetes cluster using kubeadm
+      command: kubeadm init --cri-socket /var/run/containerd/containerd.sock --apiserver-advertise-address="{{internal_ip}}" --apiserver-cert-extra-sans="{{internal_ip}}"  --node-name=k8s-master --pod-network-cidr=10.244.0.0/16 --control-plane-endpoint=k8s-master
+

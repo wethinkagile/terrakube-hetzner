@@ -1,0 +1,38 @@
+---
+
+  # - name: Create hcloud Secret
+  #   shell: 
+  #     cmd: kubectl -n kube-system create secret generic hcloud --from-literal=token="{{ env_vars.hetzner_token }}" --from-literal=network=k8s-network
+         
+
+
+  - name: Hetzner Tasks on Master
+    hosts: master
+    remote_user: root
+    tasks:
+
+      - name: touch floating-ip
+        file:
+          path: /etc/netplan/60-floating-ip.yaml
+          state: touch
+
+
+      - name: 60-floating-ip
+        shell: 
+          cmd: |
+            cat <<EOF | tee /etc/netplan/60-floating-ip.yaml
+            network:
+              version: 2
+              ethernets:
+                eth0:
+                  addresses:
+                  - 116.202.179.240/32
+            EOF
+
+      - name: netplan apply
+        shell: netplan apply
+
+
+
+
+

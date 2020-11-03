@@ -1,0 +1,57 @@
+---
+- hosts: master
+  remote_user: root
+  gather_facts: false
+  tasks:
+      - name: Install ufw
+        package:
+          name: ["ufw"]
+          state: present
+
+    
+      - name: Open Ports for Kube API on Master
+        shell: 
+          cmd: |
+            ufw allow in from 10.10.0.0/24  
+            ufw allow in from 10.244.0.0/16 
+            ufw allow in on tunl0
+            ufw allow out on tunl0
+            ufw allow routed
+            ufw allow in 22/tcp
+            ufw allow in 443/tcp
+            ufw allow in 80/tcp
+            ufw allow in 6443/tcp 
+            ufw allow out 6443/tcp 
+            ufw allow in 2379:2380/tcp
+            ufw allow in 10250:10252/tcp
+            ufw allow in 10255/tcp
+
+
+- hosts: worker
+  remote_user: root
+  gather_facts: false
+  tasks: 
+      - name: Open Ports for Kube API on Worker
+        shell: 
+          cmd: |
+            ufw allow in from 10.10.0.0/24  
+            ufw allow in from 10.244.0.0/16 
+            ufw allow in on tunl0
+            ufw allow out on tunl0
+            ufw allow routed
+            ufw allow in 22/tcp
+            ufw allow in 6443/tcp 
+            ufw allow in 30000:32767/tcp
+            ufw allow in 10250/tcp
+            ufw allow in 10255/tcp
+    
+
+- hosts: all,!local
+  remote_user: root
+  gather_facts: false
+  tasks:
+      - name: Enable firewall
+        ufw:
+          state: disabled
+
+

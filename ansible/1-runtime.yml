@@ -1,0 +1,72 @@
+---
+  - name: Hetzner Tasks 
+    hosts: all,!local
+    remote_user: root
+    tasks:
+
+      - name: Letting iptables see bridged traffic
+        shell: 
+          cmd: |
+            modprobe br_netfilter
+            modprobe overlay
+      
+      - name: Hetzner - Let Linux Node's iptables correctly see bridged traffic
+        shell: 
+          cmd: |
+            cat <<EOF | tee /etc/sysctl.conf
+            net.bridge.bridge-nf-call-iptables  = 1
+            net.ipv4.ip_forward                 = 1
+            net.bridge.bridge-nf-call-ip6tables = 1
+            EOF
+
+      - name: sysctl restart
+        shell: 
+          cmd: sysctl --system
+
+
+      - name: Install packages that allow apt to be used over HTTPS
+        apt:
+          name: "{{ packages }}"
+          state: present
+          update_cache: yes
+        vars:
+          packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+
+      - name: Add an apt signing key for Docker
+        apt_key:
+          url: https://download.docker.com/linux/ubuntu/gpg
+          state: present
+
+      - name: Add apt repository for stable version
+        apt_repository:
+          repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+          state: present
+
+      - name: Install docker and its dependecies
+        apt: 
+          name: "{{ packages }}"
+          state: present
+          update_cache: yes
+        vars:
+          packages:
+          - containerd.io
+            
+
+      - name: Configure containerd
+        shell: 
+          cmd: |
+            mkdir -p /etc/containerd
+            containerd config default > /etc/containerd/config.toml
+
+      - name:  Start docker
+        systemd:
+          state: restarted
+          name: containerd
+
+
+
+      

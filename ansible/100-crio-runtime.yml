@@ -1,0 +1,104 @@
+---
+  - name: Hetzner Tasks on Master
+    hosts: master
+    remote_user: root
+    tasks:
+
+      - name: CRI-O - Let Linux Node's iptables correctly see bridged traffic
+        shell: 
+          cmd: |
+            cat <<EOF | tee /etc/sysctl.d/99-kubernetes-cri.conf
+            net.bridge.bridge-nf-call-ip6tables = 1
+            net.bridge.bridge-nf-call-iptables  = 1
+            net.ipv4.ip_forward                 = 1
+            EOF
+
+      - name: sysctl restart
+        shell: 
+          cmd: sysctl --system
+
+      - name: Letting iptables see bridged traffic
+        shell: 
+          cmd: |
+            modprobe br_netfilter
+            modprobe overlay
+
+
+
+      - name: Install packages that allow apt to be used over HTTPS
+        apt:
+          name: "{{ packages }}"
+          state: present
+          update_cache: no
+        vars:
+          packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+          - emacs-nox
+
+
+
+      - name: Clean Up Sources.list.d
+        file:
+          path: 
+            - /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+            - /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:1.19.list
+          state: absent
+
+
+      - name: Install CRI-O Runtime 1.1
+        file:
+          path: /etc/apt/trusted.gpg.d/libcontainers.gpg
+          state: touch
+
+      - name: cri-o signing touch trusted.gpg.d/libcontainers-cri-o.gpg
+        file:
+          path: /etc/apt/trusted.gpg.d/libcontainers-cri-o.gpg
+          state: touch
+
+
+      - name: Add stable:cri deb to sources.list.d 
+        shell: 
+          cmd: wget -qO - https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/Release.key /etc/apt/trusted.gpg.d/libcontainers.gpg | sudo apt-key add -
+          warn: false
+
+
+      - name: Add stable deb to sources.list.d 
+        shell: 
+          cmd: |
+            cat <<EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
+            deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_20.04/ /
+            EOF
+
+      - name: Add stable:cri deb to sources.list.d 
+        shell: 
+          cmd: |   
+            cat <<EOF | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable:cri-o:1.19.list
+            deb http://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.19/xUbuntu_20.04/ /
+            EOF
+
+
+
+      - name: start cri-o
+        apt: 
+          name=cri-o
+          state=present 
+          update_cache=true
+
+      - name: start cri-o-runc
+        apt: 
+          name=cri-o-runc 
+          state=present 
+          update_cache=true
+
+
+      - name:  Start CRI-O
+        systemd:
+          state: started
+          daemon_reload: yes
+          name: crio
+
+      
