@@ -52,6 +52,6 @@
   tasks:
       - name: Enable firewall
         ufw:
-          state: disabled
+          state: enabled
 
 
