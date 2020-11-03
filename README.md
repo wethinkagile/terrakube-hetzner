@@ -2,7 +2,7 @@
 
 ## What's This?
 
-terrakube-hetzner is a Infrastructure as Code reporistory that includes everything needed to create Bare Bone Kubernetes Clusters according to
+terrakube-hetzner is a Infrastructure as Code repository that includes everything needed to create bare metal Kubernetes clusters according to
 [Cloud Native Computing Foundation (CNCF)](https://www.cncf.io/webinars/best-practices-for-running-and-implementing-kubernetes/)
 best practices. It is written with go, Red Hat Ansible and the Terraform Language.
 
