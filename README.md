@@ -56,7 +56,7 @@ and bootstrap Kubernetes API with kubeadm and containerd as runtime.
    Gather IPs from Terraforming into your `/etc/ansible/hosts` file. 
    Then proceed bootstrapping K8s:
 
-        $ ansible-playbook 0-reset.yml
+        $ ansible-playbook 0-reset.yml (this will delete your local known_hosts file!)
         $ ansible-playbook 1-runtime.yml
         $ ansible-playbook 2-unswap.yml
         $ ansible-playbook 3-kubelet.yml

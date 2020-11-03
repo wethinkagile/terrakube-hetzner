@@ -11,19 +11,5 @@
           state: absent
           path: ~/.ssh/known_hosts
    
-  - name: Hetzner Tasks on Master
-    hosts: master
-    remote_user: root
-    tasks:
-      - name: Reset Master Node
-        shell: 
-          cmd: |
-            rm -rf /etc/kubernetes/manifests/
-            mkdir ~/.kube
-            cp /etc/kubernetes/admin.conf ~/.kube/
-            cd ~/.kube
-            mv admin.conf config
-            service kubelet stop
-            rm -rf /var/lib/etcd
     
 
