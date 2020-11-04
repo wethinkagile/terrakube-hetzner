@@ -83,7 +83,7 @@ and bootstrap Kubernetes API with kubeadm and containerd as runtime.
         _                   _  _     _      ®
         | |_  ___  _ _  _ _ (_)| |__ | | ___ 
         |  _|/ -_)| '_|| '_|| ||  _ \| |/ -_)
-        \__|\___||_|  |_|  |_||____/|_|\___|   
+        \__|\___||_|  |_|  |_||____/|_|\___|     (just kidding..)
 
 
 
