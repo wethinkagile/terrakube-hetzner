@@ -76,7 +76,16 @@ and bootstrap Kubernetes API with kubeadm and containerd as runtime.
 
 <!-- [![Code Triage Badge](https://www.codetriage.com/rails/rails/badges/users.svg)](https://www.codetriage.com/rails/rails) -->
 
- I encourage you to contribute to this project! I'm setting up codetriage very soon.
+ I encourage you to contribute to this project! Also 'stuff might not run for you, as they did for me', which is (still) in the nature of the software development process. I'm setting up codetriage maybe much more later.
+
+ On a site note I wanted to name the project 'Terrible Hetzner', because of the Terraform + Ansible part of the project, but I though that sounded kind of unfortunate to the data center. 
+
+  _                   _  _     _      ®
+| |_  ___  _ _  _ _ (_)| |__ | | ___ 
+|  _|/ -_)| '_|| '_|| ||  _ \| |/ -_)
+ \__|\___||_|  |_|  |_||____/|_|\___|   
+
+
 
 <!-- Please check out the
 [Contributing to Stevek-Pro guide](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html) for guidelines about how to proceed. [Join us!](https://contributors.rubyonrails.org) -->

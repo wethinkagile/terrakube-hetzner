@@ -29,7 +29,7 @@ resource "hcloud_network_route" "k8s-route" {
 resource "hcloud_server" "master" {
   image = "ubuntu-20.04"
   name = "k8s-master"
-  server_type = "cx21"
+  server_type = "cx21-ceph"
   location = "nbg1"
   ssh_keys = [hcloud_ssh_key.access-ssh-key.id]
 }
@@ -44,7 +44,7 @@ resource "hcloud_server" "nodes" {
   count = var.node_count
   image = "ubuntu-20.04"
   name = "k8s-node-${count.index+1}"
-  server_type = "cx11"
+  server_type = "cx11-ceph"
   location = "nbg1"
   ssh_keys = [hcloud_ssh_key.access-ssh-key.id]
 }
