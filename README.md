@@ -87,7 +87,7 @@ and bootstrap Kubernetes API with kubeadm and containerd as runtime.
 
 ## Code Status
 
-[![Known Vulnerabilities](https://snyk.io/test/github/{stevek-pro}/{terrakube-hetzner}/badge.svg)](https://snyk.io/test/github/{stevek-pro}/{terrakube-hetzner})
+[![Known Vulnerabilities](https://snyk.io/test/github/stevek-pro/terrakube-hetzner/badge.svg)](https://snyk.io/test/github/stevek-pro/terrakube-hetzner)
 
 
 
