@@ -80,10 +80,10 @@ and bootstrap Kubernetes API with kubeadm and containerd as runtime.
 
  On a site note I wanted to name the project 'Terrible Hetzner', because of the Terraform + Ansible part of the project, but I though that sounded kind of unfortunate to the data center. 
 
-  _                   _  _     _      ®
-| |_  ___  _ _  _ _ (_)| |__ | | ___ 
-|  _|/ -_)| '_|| '_|| ||  _ \| |/ -_)
- \__|\___||_|  |_|  |_||____/|_|\___|   
+        _                   _  _     _      ®
+        | |_  ___  _ _  _ _ (_)| |__ | | ___ 
+        |  _|/ -_)| '_|| '_|| ||  _ \| |/ -_)
+        \__|\___||_|  |_|  |_||____/|_|\___|   
 
 
 
