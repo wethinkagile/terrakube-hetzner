@@ -85,15 +85,11 @@ and bootstrap Kubernetes API with kubeadm and containerd as runtime.
         |  _|/ -_)| '_|| '_|| ||  _ \| |/ -_)
         \__|\___||_|  |_|  |_||____/|_|\___|     (just kidding..)
 
+## Code Status
+
+[![Known Vulnerabilities](https://snyk.io/test/github/{stevek-pro}/{terrakube-hetzner}/badge.svg)](https://snyk.io/test/github/{stevek-pro}/{terrakube-hetzner})
 
 
-<!-- Please check out the
-[Contributing to Stevek-Pro guide](https://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html) for guidelines about how to proceed. [Join us!](https://contributors.rubyonrails.org) -->
-
-
-<!-- ## Code Status
-
-[![Build Status](https://badge.buildkite.com/ab1152b6a1f6a61d3ea4ec5b3eece8d4c2b830998459c75352.svg?branch=master)](https://buildkite.com/rails/rails) -->
 
 ## License
 
